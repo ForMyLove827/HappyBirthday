@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Личное интерактивное поздравление с днем рождения.">
+    <title>Подарок на день рождения</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="loader" id="loader" aria-live="polite">
+      <div class="loader__glow"></div>
+      <p>Собираю маленькое чудо...</p>
+    </div>
+
+    <main>
+      <section class="intro" id="intro" aria-labelledby="intro-title">
+        <div class="intro__particles" aria-hidden="true"></div>
+        <div class="intro__content">
+          <p class="eyebrow">Только для тебя</p>
+          <h1 id="intro-title">У меня для тебя кое-что есть...</h1>
+          <p class="hand-note">маленькая коробка воспоминаний</p>
+          <a class="button button--primary" id="openGift" href="#gift" onclick="window.openBirthdayGift && window.openBirthdayGift()">Открыть подарок</a>
+        </div>
+      </section>
+
+      <div class="site-shell" id="gift" aria-hidden="true">
+        <section class="hero section reveal" aria-labelledby="hero-title">
+          <div class="hero__media photo-frame photo-frame--large" data-photo-slot="hero"></div>
+          <div class="hero__copy">
+            <p class="eyebrow">Сегодня твой день</p>
+            <h2 id="hero-title"></h2>
+            <p id="hero-subtitle"></p>
+            <p class="hand-note">сделано с любовью, не по шаблону</p>
+          </div>
+        </section>
+
+        <section class="story section reveal" aria-labelledby="story-title">
+          <div class="section__heading">
+            <p class="eyebrow">Наша история</p>
+            <h2 id="story-title">Моменты, которые хочется хранить</h2>
+          </div>
+          <div class="timeline" id="storyTimeline"></div>
+        </section>
+
+        <section class="reasons section reveal" aria-labelledby="reasons-title">
+          <div class="section__heading">
+            <p class="eyebrow">Тихие причины</p>
+            <h2 id="reasons-title">Есть много причин, почему я тебя люблю</h2>
+          </div>
+          <div class="reason-grid" id="reasonGrid"></div>
+        </section>
+
+        <section class="friends-intro section reveal" aria-labelledby="friends-intro-title">
+          <div class="friends-intro__inner">
+            <p class="eyebrow">Но это ещё не всё...</p>
+            <h2 id="friends-intro-title">Есть ещё люди, которые хотят тебе кое-что сказать</h2>
+          </div>
+        </section>
+
+        <section class="friends section reveal" aria-labelledby="friends-title">
+          <div class="section__heading">
+            <p class="eyebrow">Поздравления</p>
+            <h2 id="friends-title">Тёплые слова от близких</h2>
+          </div>
+          <div class="friend-grid" id="friendGrid"></div>
+        </section>
+
+        <section class="gallery section reveal" aria-labelledby="gallery-title">
+          <div class="section__heading">
+            <p class="eyebrow">Фотоальбом</p>
+            <h2 id="gallery-title">Галерея воспоминаний</h2>
+          </div>
+          <div class="masonry" id="galleryGrid"></div>
+        </section>
+
+        <section class="letter section reveal" aria-labelledby="letter-title">
+          <div class="letter__content">
+            <p class="eyebrow">И ещё кое-что...</p>
+            <h2 id="letter-title">Письмо, которое откроется только тебе</h2>
+            <button class="envelope" id="openLetter" type="button" aria-expanded="false">
+              <span class="envelope__flap"></span>
+              <span class="envelope__body"></span>
+              <span class="envelope__label">Открыть письмо</span>
+            </button>
+            <article class="letter-paper" id="letterPaper"></article>
+          </div>
+        </section>
+
+        <section class="finale section reveal" aria-labelledby="finale-title">
+          <div class="cake" aria-hidden="true">
+            <div class="cake__candles">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="cake__top"></div>
+            <div class="cake__base"></div>
+          </div>
+          <p class="eyebrow">Финальный сюрприз</p>
+          <h2 id="finale-title">Загадай желание</h2>
+          <button class="button button--primary" id="blowCandles" type="button">Задуть свечи</button>
+          <div class="finale__messages" id="finaleMessages"></div>
+        </section>
+      </div>
+    </main>
+
+    <div class="music-player" id="musicPlayer" hidden>
+      <button class="music-player__button" id="musicToggle" type="button" aria-label="Включить нашу песню">▶</button>
+      <label class="sr-only" for="musicSelect">Выбрать песню</label>
+      <select class="music-player__select" id="musicSelect" aria-label="Выбрать песню"></select>
+      <audio id="musicAudio" preload="none"></audio>
+    </div>
+
+    <dialog class="modal" id="friendModal">
+      <button class="modal__close" id="closeFriendModal" type="button" aria-label="Закрыть">×</button>
+      <div class="modal__body" id="friendModalBody"></div>
+    </dialog>
+
+    <dialog class="lightbox" id="lightbox">
+      <button class="lightbox__close" id="closeLightbox" type="button" aria-label="Закрыть">×</button>
+      <button class="lightbox__nav lightbox__nav--prev" id="prevPhoto" type="button" aria-label="Предыдущее фото">‹</button>
+      <figure>
+        <img id="lightboxImage" alt="">
+        <figcaption id="lightboxCaption"></figcaption>
+      </figure>
+      <button class="lightbox__nav lightbox__nav--next" id="nextPhoto" type="button" aria-label="Следующее фото">›</button>
+    </dialog>
+
+    <canvas class="confetti-canvas" id="confettiCanvas" aria-hidden="true"></canvas>
+
+    <script src="js/data.js?v=photos-2026-08-23-7"></script>
+    <script src="js/main.js?v=photos-2026-08-23-7"></script>
+  </body>
+</html>
