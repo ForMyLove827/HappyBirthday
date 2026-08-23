@@ -1,5 +1,5 @@
 const birthdayData = {
-  assetVersion: "photos-2026-08-23-8",
+  assetVersion: "photos-2026-08-23-9",
   girlName: "Любимая",
   hero: {
     title: "С днём рождения, Любимая",
@@ -14,31 +14,31 @@ const birthdayData = {
     tracks: [
       {
         title: "Баста - Кинолента",
-        src: "assets/music/Basta_-_Kinolenta_48616302.mp3"
+        src: "assets/music/web/Basta_-_Kinolenta_48616302.mp3"
       },
       {
         title: "Баста - Моя вселенная",
-        src: "assets/music/BASTA_-_Moya_vselennaya_48304809.mp3"
+        src: "assets/music/web/BASTA_-_Moya_vselennaya_48304809.mp3"
       },
       {
         title: "Баста - Я найду тебя через века",
-        src: "assets/music/Basta_-_YA_najjdu_tebya_cherez_veka_78018876.mp3"
+        src: "assets/music/web/Basta_-_YA_najjdu_tebya_cherez_veka_78018876.mp3"
       },
       {
         title: "Gde antom - Я тебя люблю",
-        src: "assets/music/Gde_antom_-_YA_tebya_lyublyu_70839180.mp3"
+        src: "assets/music/web/Gde_antom_-_YA_tebya_lyublyu_70839180.mp3"
       },
       {
         title: "Miyagi - Angel",
-        src: "assets/music/Miyagi_-_Angel_65373342.mp3"
+        src: "assets/music/web/Miyagi_-_Angel_65373342.mp3"
       },
       {
         title: "Михей и Джуманджи - Сука-любовь",
-        src: "assets/music/Mikhejj_i_Dzhumandzhi_-_Suka-lyubov_47844366.mp3"
+        src: "assets/music/web/Mikhejj_i_Dzhumandzhi_-_Suka-lyubov_47844366.mp3"
       },
       {
         title: "Антоха MC / Uma2rman - Звёзды считают нас",
-        src: "assets/music/Antokha_MS_-_Praskovya_Uma2rman_Zvjozdy_schitayut_nas_81204243.mp3"
+        src: "assets/music/web/Antokha_MS_-_Praskovya_Uma2rman_Zvjozdy_schitayut_nas_81204243.mp3"
       }
     ]
   },
