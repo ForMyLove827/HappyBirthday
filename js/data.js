@@ -1,5 +1,5 @@
 const birthdayData = {
-  assetVersion: "photos-2026-08-23-7",
+  assetVersion: "photos-2026-08-23-8",
   girlName: "Любимая",
   hero: {
     title: "С днём рождения, Любимая",
@@ -9,6 +9,7 @@ const birthdayData = {
   },
   music: {
     autoplay: true,
+    startAfterFirstTap: true,
     defaultTrackTitle: "Gde antom - Я тебя люблю",
     tracks: [
       {

@@ -933,6 +933,24 @@ h3 {
   box-shadow: 0 8px 18px rgba(142, 63, 75, 0.18);
 }
 
+.music-player--waiting::after {
+  position: absolute;
+  right: 0.8rem;
+  bottom: calc(100% + 0.45rem);
+  width: max-content;
+  max-width: min(16rem, calc(100vw - 2rem));
+  border: 1px solid rgba(93, 62, 48, 0.12);
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.65rem;
+  color: var(--soft-ink);
+  content: "коснись экрана, чтобы включить музыку";
+  font-family: var(--hand);
+  font-size: 1.15rem;
+  line-height: 1;
+  background: rgba(255, 250, 241, 0.94);
+  box-shadow: var(--soft-shadow);
+}
+
 .modal,
 .lightbox {
   width: min(calc(100% - 2rem), 42rem);

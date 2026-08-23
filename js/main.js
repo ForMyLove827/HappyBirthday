@@ -10,6 +10,7 @@
     if (!src) return src;
     const hasVersion = src.includes("?") || src.startsWith("data:");
     if (hasVersion || !data.assetVersion) return src;
+    if (src.includes("/music/")) return src;
     return `${src}?v=${encodeURIComponent(data.assetVersion)}`;
   }
 
@@ -250,7 +251,6 @@
         return;
       }
       audio.src = versionAsset(track.src);
-      audio.load();
       if (shouldKeepPlaying) {
         startPlayback();
       }
@@ -273,15 +273,17 @@
       document.addEventListener("pointerdown", playAfterGesture);
       document.addEventListener("keydown", playAfterGesture);
 
-      window.setTimeout(async () => {
-        const started = await startPlayback(false);
-        if (started) {
-          document.removeEventListener("pointerdown", playAfterGesture);
-          document.removeEventListener("keydown", playAfterGesture);
-        } else {
-          player.classList.add("music-player--waiting");
-        }
-      }, 650);
+      player.classList.add("music-player--waiting");
+
+      if (!data.music.startAfterFirstTap) {
+        window.setTimeout(async () => {
+          const started = await startPlayback(false);
+          if (started) {
+            document.removeEventListener("pointerdown", playAfterGesture);
+            document.removeEventListener("keydown", playAfterGesture);
+          }
+        }, 1200);
+      }
     }
 
     audio.addEventListener("error", () => {
