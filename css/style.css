@@ -1393,6 +1393,11 @@ body.friend-video-open {
     border-radius: 0.75rem;
   }
 
+  .friend-grid {
+    grid-template-columns: repeat(2, minmax(0, 8.9rem));
+    justify-content: center;
+  }
+
   .photo--hero {
     height: min(57svh, 30rem);
   }
@@ -1408,6 +1413,10 @@ body.friend-video-open {
 @media (max-width: 380px) {
   .section {
     padding-inline: 0.85rem;
+  }
+
+  .friend-grid {
+    grid-template-columns: minmax(0, 7.4rem);
   }
 
   .friend-card {
