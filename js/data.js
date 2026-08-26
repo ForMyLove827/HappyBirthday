@@ -148,12 +148,10 @@ const birthdayData = {
     {
       photo: "assets/photos/photo_13_2026-08-23_14-13-52.jpg",
       alt: "Фотография из нашей галереи",
-      caption: "Маленькое воспоминание"
     },
     {
       photo: "assets/photos/photo_15_2026-08-23_14-13-52.jpg",
       alt: "Ещё одна фотография из нашей галереи",
-      caption: "Тот самый момент"
     },
     {
       photo: "assets/photos/photo_26_2026-08-23_14-13-52.jpg",
@@ -163,37 +161,30 @@ const birthdayData = {
     {
       photo: "assets/photos/photo_28_2026-08-23_14-13-52.jpg",
       alt: "Памятный день",
-      caption: "Просто счастье"
     },
     {
       photo: "assets/photos/photo_29_2026-08-23_14-13-52.jpg",
       alt: "Красивая фотография",
-      caption: "Наше"
     },
     {
       photo: "assets/photos/photo_2026-08-23_14-11-57.jpg",
       alt: "Портретная фотография",
-      caption: "Такой тёплый кадр"
     },
     {
       photo: "assets/photos/photo_22_2026-08-23_14-13-52.jpg",
       alt: "Фотография на закате",
-      caption: "Вечерний свет"
     },
     {
       photo: "assets/photos/photo_25_2026-08-23_14-13-52.jpg",
       alt: "Фото из машины",
-      caption: "По дороге куда-то"
     },
     {
       photo: "assets/photos/photo_20_2026-08-23_14-13-52.jpg",
       alt: "Чёрно-белое фото",
-      caption: "Маленькая память"
     },
     {
       photo: "assets/photos/photo_18_2026-08-23_14-13-52.jpg",
       alt: "Улыбка в машине",
-      caption: "Улыбка, которую хочется помнить"
     }
   ],
   letter: [
