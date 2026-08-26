@@ -1,5 +1,5 @@
 const birthdayData = {
-  assetVersion: "photos-2026-08-23-9",
+  assetVersion: "videos-2026-08-26-3",
   girlName: "Любимая",
   hero: {
     title: "С днём рождения, Любимая",
@@ -90,14 +90,62 @@ const birthdayData = {
       text: "Без условий, без причин, без объяснений. Ты есть, и этого уже достаточно."
     }
   ],
-  friends: [
+  lovedOnes: [
     {
-      name: "",
-      photo: "assets/photos/photo_21_2026-08-23_14-13-52.jpg",
-      message: "Короткое поздравление, которое видно на карточке.",
-      fullMessage: "Полное поздравление можно написать здесь. Оно откроется в красивом окне по нажатию.",
-      video: null,
-      audio: null
+      name: "Даня",
+      photo: "assets/friends/1.jpg",
+      video: "assets/video/1.mp4",
+      photoPosition: "center",
+      videoPosition: "center"
+    },
+    {
+      name: "Альбина",
+      photo: "assets/friends/1.png",
+      video: "assets/video/Albina.mp4",
+      photoPosition: "center",
+      videoPosition: "center"
+    },
+    {
+      name: "Дияна",
+      photo: "assets/friends/3.jpg",
+      video: "assets/video/Diana.mp4",
+      photoPosition: "center",
+      videoPosition: "center"
+    },
+    {
+      name: "Дильшат",
+      photo: "assets/friends/4.jpg",
+      video: "assets/video/Dilshat.mp4",
+      photoPosition: "center",
+      videoPosition: "center"
+    },
+    {
+      name: "Ирада",
+      photo: "assets/friends/5.jpg",
+      video: "assets/video/Irada.mp4",
+      photoPosition: "center",
+      videoPosition: "center"
+    },
+    {
+      name: "Рома",
+      photo: "assets/friends/6.jpg",
+      video: "assets/video/Roma.mp4",
+      photoPosition: "center",
+      videoPosition: "center"
+    },
+    {
+      name: "Туча",
+      photo: "assets/friends/7.jpg",
+      video: "assets/video/Tucha.mp4",
+      photoPosition: "center",
+      videoPosition: "center"
+    },
+    {
+      name: "Азат",
+      photo: "assets/friends/8.jpg",
+      video: "assets/video/Azat.mp4",
+      photoPosition: "center",
+      videoPosition: "center"
     }
   ],
   gallery: [

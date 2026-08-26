@@ -94,57 +94,111 @@
 
   function renderFriends() {
     const grid = $("#friendGrid");
-    data.friends.forEach((friend, index) => {
-      const card = document.createElement("article");
+    const lovedOnes = data.lovedOnes || data.friends || [];
+    lovedOnes.forEach((person, index) => {
+      const card = document.createElement("button");
       card.className = `friend-card tilt-${(index % 3) + 1}`;
-      const image = createImage({
-        photo: friend.photo,
-        alt: `Фото: ${friend.name}`,
-        caption: friend.name
-      }, "friend-card__photo");
-      card.append(image);
-      const content = document.createElement("div");
-      content.className = "friend-card__content";
-      content.innerHTML = `
-        <h3>${friend.name}</h3>
-        <p>${friend.message}</p>
-        <div class="friend-card__actions">
-          <button class="button button--ghost" type="button" data-friend="${index}">Открыть поздравление</button>
-        </div>
+      card.type = "button";
+      card.dataset.friend = index;
+      card.setAttribute("aria-label", `Посмотреть поздравление от ${person.name || "близкого человека"}`);
+      card.innerHTML = `
+        <span class="friend-card__avatar">
+          <img src="${versionAsset(person.photo)}" alt="" loading="lazy" style="object-position: ${person.photoPosition || "center"}">
+          <span class="friend-card__fallback" aria-hidden="true">${person.name ? person.name.slice(0, 1) : "♡"}</span>
+        </span>
+        <span class="friend-card__name">
+          ${person.name || "Поздравление"}
+        </span>
       `;
-      card.append(content);
+      const image = $("img", card);
+      image.addEventListener("error", () => {
+        card.classList.add("friend-card--no-photo");
+        image.remove();
+      }, { once: true });
       grid.append(card);
     });
 
     grid.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-friend]");
-      if (!button) return;
-      openFriendModal(data.friends[Number(button.dataset.friend)]);
+      const card = event.target.closest("[data-friend]");
+      if (!card) return;
+      openFriendModal(Number(card.dataset.friend), card);
     });
   }
 
-  function openFriendModal(friend) {
+  let currentFriendVideo = 0;
+
+  function openFriendModal(index, opener) {
     const modal = $("#friendModal");
-    const body = $("#friendModalBody");
-    body.innerHTML = `
-      <h3>${friend.name}</h3>
-      <p>${friend.fullMessage || friend.message}</p>
-      <div class="modal__media"></div>
-    `;
-    const media = $(".modal__media", body);
-    if (friend.video) {
-      const video = document.createElement("video");
-      video.controls = true;
-      video.src = versionAsset(friend.video);
-      media.append(video);
+    const musicAudio = $("#musicAudio");
+    const musicToggle = $("#musicToggle");
+    if (musicAudio && !musicAudio.paused) {
+      musicAudio.pause();
+      if (musicToggle) {
+        musicToggle.textContent = "▶";
+        musicToggle.setAttribute("aria-label", "Включить музыку");
+      }
     }
-    if (friend.audio) {
-      const audio = document.createElement("audio");
-      audio.controls = true;
-      audio.src = versionAsset(friend.audio);
-      media.append(audio);
-    }
+    modal.returnFocusTo = opener || null;
+    currentFriendVideo = index;
+    updateFriendModal();
     modal.showModal();
+    document.body.classList.add("friend-video-open");
+  }
+
+  function updateFriendModal(shouldPlay = true) {
+    const body = $("#friendModalBody");
+    const lovedOnes = data.lovedOnes || data.friends || [];
+    const friend = lovedOnes[currentFriendVideo];
+    if (!friend) return;
+
+    body.innerHTML = `
+      <div class="friend-video">
+        <video class="friend-video__player" controls playsinline webkit-playsinline preload="metadata" style="object-position: ${friend.videoPosition || "center"}"></video>
+      </div>
+      <div class="friend-video__footer">
+        <button class="friend-video__nav friend-video__nav--prev" type="button" aria-label="Предыдущее видео">‹</button>
+        <p class="friend-video__caption">${friend.name || "Поздравление"}</p>
+        <span class="friend-video__count">${currentFriendVideo + 1} / ${lovedOnes.length}</span>
+        <button class="friend-video__nav friend-video__nav--next" type="button" aria-label="Следующее видео">›</button>
+      </div>
+    `;
+    const video = $(".friend-video__player", body);
+    video.src = versionAsset(friend.video);
+    video.addEventListener("ended", () => moveFriendVideo(1), { once: true });
+    $(".friend-video__nav--prev", body).addEventListener("click", () => moveFriendVideo(-1));
+    $(".friend-video__nav--next", body).addEventListener("click", () => moveFriendVideo(1));
+    if (!shouldPlay) return;
+    window.setTimeout(() => {
+      video.play().catch(() => {
+        video.controls = true;
+      });
+    }, 80);
+  }
+
+  function moveFriendVideo(direction) {
+    const lovedOnes = data.lovedOnes || data.friends || [];
+    if (!lovedOnes.length) return;
+    currentFriendVideo = (currentFriendVideo + direction + lovedOnes.length) % lovedOnes.length;
+    updateFriendModal();
+  }
+
+  function closeFriendModal() {
+    const modal = $("#friendModal");
+    const video = $(".friend-video__player", modal);
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+      video.removeAttribute("src");
+      video.load();
+    }
+    modal.classList.add("is-closing");
+    window.setTimeout(() => {
+      modal.close();
+      modal.classList.remove("is-closing");
+      document.body.classList.remove("friend-video-open");
+      modal.returnFocusTo?.focus();
+      modal.returnFocusTo = null;
+    }, prefersReducedMotion ? 0 : 220);
   }
 
   function renderGallery() {
@@ -404,7 +458,15 @@
   }
 
   function setupDialogs() {
-    $("#closeFriendModal").addEventListener("click", () => $("#friendModal").close());
+    const friendModal = $("#friendModal");
+    $("#closeFriendModal").addEventListener("click", closeFriendModal);
+    friendModal.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeFriendModal();
+    });
+    friendModal.addEventListener("click", (event) => {
+      if (event.target === friendModal) closeFriendModal();
+    });
     $("#closeLightbox").addEventListener("click", () => $("#lightbox").close());
     $("#prevPhoto").addEventListener("click", () => moveLightbox(-1));
     $("#nextPhoto").addEventListener("click", () => moveLightbox(1));
@@ -421,6 +483,16 @@
     }, { passive: true });
 
     document.addEventListener("keydown", (event) => {
+      if (friendModal.open && event.key === "Escape") {
+        event.preventDefault();
+        closeFriendModal();
+        return;
+      }
+      if (friendModal.open) {
+        if (event.key === "ArrowLeft") moveFriendVideo(-1);
+        if (event.key === "ArrowRight") moveFriendVideo(1);
+        return;
+      }
       if (!$("#lightbox").open) return;
       if (event.key === "ArrowLeft") moveLightbox(-1);
       if (event.key === "ArrowRight") moveLightbox(1);
