@@ -156,7 +156,6 @@ const birthdayData = {
     {
       photo: "assets/photos/photo_26_2026-08-23_14-13-52.jpg",
       alt: "Тёплый кадр",
-      caption: "Хочется возвращаться"
     },
     {
       photo: "assets/photos/photo_28_2026-08-23_14-13-52.jpg",
