@@ -1,5 +1,5 @@
 const birthdayData = {
-  assetVersion: "videos-2026-08-26-4",
+  assetVersion: "videos-2026-08-26-5",
   girlName: "Любимая",
   hero: {
     title: "С днём рождения, Любимая",
@@ -100,7 +100,7 @@ const birthdayData = {
     },
     {
       name: "Альбина",
-      photo: "assets/friends/Albina.png",
+      photo: "",
       video: "assets/video/Albina.mp4",
       photoPosition: "center",
       videoPosition: "center"

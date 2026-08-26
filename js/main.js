@@ -101,9 +101,12 @@
       card.type = "button";
       card.dataset.friend = index;
       card.setAttribute("aria-label", `Посмотреть поздравление от ${person.name || "близкого человека"}`);
+      const photoMarkup = person.photo
+        ? `<img src="${versionAsset(person.photo)}" alt="" loading="lazy" style="object-position: ${person.photoPosition || "center"}">`
+        : "";
       card.innerHTML = `
         <span class="friend-card__avatar">
-          <img src="${versionAsset(person.photo)}" alt="" loading="lazy" style="object-position: ${person.photoPosition || "center"}">
+          ${photoMarkup}
           <span class="friend-card__fallback" aria-hidden="true">${person.name ? person.name.slice(0, 1) : "♡"}</span>
         </span>
         <span class="friend-card__name">
@@ -111,10 +114,14 @@
         </span>
       `;
       const image = $("img", card);
-      image.addEventListener("error", () => {
+      if (!image) {
         card.classList.add("friend-card--no-photo");
-        image.remove();
-      }, { once: true });
+      } else {
+        image.addEventListener("error", () => {
+          card.classList.add("friend-card--no-photo");
+          image.remove();
+        }, { once: true });
+      }
       grid.append(card);
     });
 
@@ -125,7 +132,43 @@
     });
   }
 
+  let hasStartedVideoPreload = false;
   let currentFriendVideo = 0;
+
+  function preloadFriendVideos() {
+    if (hasStartedVideoPreload) return;
+    hasStartedVideoPreload = true;
+
+    const lovedOnes = data.lovedOnes || data.friends || [];
+    const videos = lovedOnes
+      .map((person) => person.video)
+      .filter(Boolean)
+      .map(versionAsset);
+
+    const preloadNext = (index = 0) => {
+      const src = videos[index];
+      if (!src) return;
+
+      const video = document.createElement("video");
+      video.preload = "auto";
+      video.muted = true;
+      video.playsInline = true;
+      video.src = src;
+      video.setAttribute("aria-hidden", "true");
+      video.className = "friend-video-preload";
+      document.body.append(video);
+      video.load();
+
+      window.setTimeout(() => preloadNext(index + 1), 900);
+    };
+
+    const start = () => preloadNext();
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(start, { timeout: 1600 });
+    } else {
+      window.setTimeout(start, 900);
+    }
+  }
 
   function openFriendModal(index, opener) {
     const modal = $("#friendModal");
@@ -366,6 +409,7 @@
       intro.classList.add("intro--opened");
       gift.setAttribute("aria-hidden", "false");
       gift.classList.add("site-shell--visible");
+      preloadFriendVideos();
       setTimeout(() => gift.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" }), 420);
     };
     window.openBirthdayGift = openGift;

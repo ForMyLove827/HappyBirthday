@@ -1133,6 +1133,14 @@ body.friend-video-open {
   background: #1f1715;
 }
 
+.friend-video-preload {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  opacity: 0;
+}
+
 .friend-video__footer {
   display: grid;
   grid-template-columns: 2.45rem minmax(0, 1fr) auto 2.45rem;
